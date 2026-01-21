@@ -29,7 +29,7 @@ export default function MessageInput({ inputMessage, setInputMessage, sendMessag
                     />
                     <button
                         onClick={sendMessage}
-                        disabled={!isConnected || isLoading || inputMessage.trim()}
+                        disabled={!isConnected || isLoading || !inputMessage.trim()}
                         className="bg-blue-600 hover:bg-blue-700 text-white p-2 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                         <span className="hidden sm:inline">Send</span>

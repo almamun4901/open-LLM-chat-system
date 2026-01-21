@@ -4,6 +4,8 @@ import { messageReducer } from "@/reducers/messageReducer";
 import { useReducer, useState, useRef, useEffect } from "react";
 import ChatHeader from "@/components/ChatHeader";
 import MessageInput from "@/components/MessageInput";
+import Message from "@/components/Message";
+import LoadingIndicator from "@/components/LoadingIndicator";
 
 export default function Chat() {
 
@@ -12,6 +14,15 @@ export default function Chat() {
     const [isLoading, setIsLoading] = useState(false)
     const [isConencted, setIsConnected] = useState(false)
     const wsRef = useRef<WebSocket | null>(null)
+    const messagesEndRef = useRef<HTMLDivElement>(null)
+
+    const scrollToBottom = () => {
+        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
+    }
+
+    useEffect(() => {
+        scrollToBottom()
+    }, [messages])
 
     const sendMessage = () => {
         const trimmed = inputMessage.trim()
@@ -124,8 +135,19 @@ export default function Chat() {
     return (
         <div className="flex flex-col h-screen bg-slate-900">
             <ChatHeader isConnected={isConencted} />
-            <div>body</div>
-            <MessageInput 
+            <div className="flex-1 overflow-y-auto p-4 pb-24">
+                <div className="max-w-2xl mx-auto space-y-3 sm:space-y-4">
+                    {messages.map((message) => (
+                        <Message
+                            key={message.id}
+                            message={message}
+                        />
+                    ))}
+                    {isLoading ? <LoadingIndicator /> : null}
+                    <div ref={messagesEndRef} />
+                </div>
+            </div>
+            <MessageInput
                 inputMessage={inputMessage}
                 setInputMessage={setInputMessage}
                 sendMessage={sendMessage}
