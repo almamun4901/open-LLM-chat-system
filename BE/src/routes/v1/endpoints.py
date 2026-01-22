@@ -41,7 +41,7 @@ async def websocket_endpoint(websocket: WebSocket):
 
                 # time
                 start_time = time.time()
-                await generate_streaming_message(user_message, websocket, start_time)
+                await generate_streaming_response(user_message, websocket, start_time)
                 
             except json.JSONDecodeError:
                 await websocket.send_json({"error": "Invalid JSON format"})

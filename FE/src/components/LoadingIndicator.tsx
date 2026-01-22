@@ -1,15 +1,10 @@
 export default function LoadingIndicator() {
     return (
         <div className="flex justify-start">
-            <div 
-            className="bg-slate-800 border border-salte-700 text-slate-200 px-4 py-y rounded-lg"
-            >
-                <div className="flex space-x-1">
-                    <div className="w-2 h-2 bg-slate-400 rounded-full animate-bounce" />
-                    <div className="w-2 h-2 bg-slate-400 rounded-full animate-bounce" style={{animationDelay: "0.1s"}} />
-                    <div className="w-2 h-2 bg-slate-400 rounded-full animate-bounce" style={{animationDelay: "0.2s"}} />
-                </div>
-                
+            <div className="flex items-center gap-1 px-4 py-3">
+                <div className="w-1.5 h-1.5 bg-neutral-500 rounded-full animate-pulse" style={{ animationDelay: "0ms" }} />
+                <div className="w-1.5 h-1.5 bg-neutral-500 rounded-full animate-pulse" style={{ animationDelay: "150ms" }} />
+                <div className="w-1.5 h-1.5 bg-neutral-500 rounded-full animate-pulse" style={{ animationDelay: "300ms" }} />
             </div>
         </div>
     )

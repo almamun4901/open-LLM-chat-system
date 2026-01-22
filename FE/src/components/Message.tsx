@@ -7,159 +7,119 @@ interface MessageProps {
 }
 
 export default function Message({ message }: MessageProps) {
+    const isUser = message.sender === "user";
+
     return (
-        <div
-        className={`flex ${
-            message.sender === "user" ? "justify-end" : "justify-start"
-        }`}>
-            <div className={`max-w-[85%] sm:max-w-xs lg:max-w-md px-3 py-2 sm:px-4 sm:py-2 rounded-lg ${
-                message.sender === "user" ? "bg-purple-900 text-white" : "bg-slate-800/60 text-slate-200"
-            }`}>
+        <div className={`flex ${isUser ? "justify-end" : "justify-start"}`}>
+            <div className={`max-w-[80%] sm:max-w-md lg:max-w-lg ${isUser
+                    ? "bg-white text-black rounded-3xl rounded-br-lg"
+                    : "text-neutral-200"
+                } px-4 py-2.5`}>
 
-                <div className="text-sm sm:text-base">
-
+                <div className="text-sm leading-relaxed">
                     <ReactMarkdown
                         remarkPlugins={[remarkGfm]}
                         components={{
-                            code({node, className, children, ...props}){
+                            code({ node, className, children, ...props }) {
                                 const match = /language-(\w+)/.exec(className || "")
                                 return match ? (
-                                    <div className="my-2 rounded-lg overflow-hidden">
-                                        <div className="bg-slate-800 px-3 py-1 text-xs text-slate-400 border-b border-slate-700">
+                                    <div className="my-3 rounded-lg overflow-hidden border border-neutral-800">
+                                        <div className="bg-neutral-900 px-3 py-1.5 text-xs text-neutral-500 border-b border-neutral-800 font-mono">
                                             {match[1]}
                                         </div>
-                                        <pre className="bg-slate-900 p-3 text-sm text-slate-200 overflow-x-auto">
-                                            <code className={className} {...props}>{children}</code>
+                                        <pre className="bg-neutral-950 p-3 text-sm text-neutral-300 overflow-x-auto">
+                                            <code className={`${className} font-mono`} {...props}>{children}</code>
                                         </pre>
-
                                     </div>
-                                    
                                 ) : (
-                                    <code className="bg-slate-800 px-1 py-0.5 rounded text-sm" {...props}>{children}</code>
+                                    <code className="bg-neutral-800 text-neutral-200 px-1.5 py-0.5 rounded text-sm font-mono" {...props}>{children}</code>
                                 )
                             },
-                            table({children}) {
+                            table({ children }) {
                                 return (
-                                    <div className="my-2 overflow-x-auto">
-                                        <table className="min-w-full border border-slate-700 rounded-lg">
+                                    <div className="my-3 overflow-x-auto border border-neutral-800 rounded-lg">
+                                        <table className="min-w-full">
                                             {children}
                                         </table>
                                     </div>
-                                )   
+                                )
                             },
-
-                            th({children}) {
+                            th({ children }) {
                                 return (
-                                    <th className="px-4 py-2 text-left text-xs font-semibold text-slate-200 border-b border-slate-700">
+                                    <th className="px-4 py-2 text-left text-xs font-medium text-neutral-400 uppercase tracking-wider border-b border-neutral-800 bg-neutral-900">
                                         {children}
                                     </th>
                                 )
                             },
-
-                            td({children}) {
+                            td({ children }) {
                                 return (
-                                    <td className="px-4 py-2 text-left text-xs font-semibold text-slate-200 border-b border-slate-700">
+                                    <td className="px-4 py-2 text-sm text-neutral-300 border-b border-neutral-800">
                                         {children}
                                     </td>
                                 )
                             },
-
-                            p({children}) {
+                            p({ children }) {
                                 return (
-                                    <p className=" break-words mb-2 last:mb-0">
+                                    <p className="mb-2 last:mb-0">
                                         {children}
                                     </p>
                                 )
                             },
-
-                            ul({children}) {
+                            ul({ children }) {
                                 return (
-                                    <ul className="list-disc list-inside mb-2 space-y-1">
+                                    <ul className="list-disc list-inside mb-2 space-y-1 text-neutral-300">
                                         {children}
                                     </ul>
                                 )
                             },
-
-                            li({children}) {
+                            ol({ children }) {
                                 return (
-                                    <li className="list-decimal list-inside mb-2 space-y-1">
+                                    <ol className="list-decimal list-inside mb-2 space-y-1 text-neutral-300">
+                                        {children}
+                                    </ol>
+                                )
+                            },
+                            li({ children }) {
+                                return (
+                                    <li>
                                         {children}
                                     </li>
                                 )
                             },
-
-                            blockquote({children}) {
+                            blockquote({ children }) {
                                 return (
-                                    <blockquote className="border-l-4 border-slate-700 pl-4 italic mb-2 last:mb-0">
+                                    <blockquote className="border-l-2 border-neutral-700 pl-4 italic text-neutral-400 my-2">
                                         {children}
                                     </blockquote>
                                 )
                             },
-
-                            h1({children}) {
+                            h1({ children }) {
+                                return <h1 className="text-xl font-semibold mb-2 mt-4 first:mt-0">{children}</h1>
+                            },
+                            h2({ children }) {
+                                return <h2 className="text-lg font-semibold mb-2 mt-3 first:mt-0">{children}</h2>
+                            },
+                            h3({ children }) {
+                                return <h3 className="text-base font-semibold mb-2 mt-3 first:mt-0">{children}</h3>
+                            },
+                            a({ children, href }) {
                                 return (
-                                    <h1 className="text-2xl font-bold mb-2 last:mb-0">
+                                    <a href={href} className="text-white underline underline-offset-2 hover:text-neutral-300 transition-colors">
                                         {children}
-                                    </h1>
+                                    </a>
                                 )
                             },
-
-                            h2({children}) {
-                                return (
-                                    <h2 className="text-xl font-bold mb-2 last:mb-0">
-                                        {children}
-                                    </h2>
-                                )
-                            },
-
-                            h3({children}) {
-                                return (
-                                    <h3 className="text-lg font-bold mb-2 last:mb-0">
-                                        {children}
-                                    </h3>
-                                )
-                            },
-
-                            h4({children}) {
-                                return (
-                                    <h4 className="text-md font-bold mb-2 last:mb-0">
-                                        {children}
-                                    </h4>
-                                )
-                            },
-
-                            h5({children}) {
-                                return (
-                                    <h5 className="text-sm font-bold mb-2 last:mb-0">
-                                        {children}
-                                    </h5>
-                                )
-                            },
-
-                            h6({children}) {
-                                return (
-                                    <h6 className="text-xs font-bold mb-2 last:mb-0">
-                                        {children}
-                                    </h6>
-                                )
-                            },
-
-                            
-
                         }}
                     >{message.text}</ReactMarkdown>
-                    {message.isStreaming ? (
-                        <span className="inline-block w-2 h-4 ml-1 bg-purple-400 animate-pulse rounded"/>
-                    ) : null}
+                    {message.isStreaming && (
+                        <span className="inline-block w-0.5 h-4 ml-0.5 bg-white animate-pulse" />
+                    )}
                 </div>
-                <p className="text-xs opacity-70 mt-1">
-                    {message.timestamp.toLocaleTimeString()}
+
+                <p className={`text-[10px] mt-1.5 ${isUser ? "text-neutral-500" : "text-neutral-600"}`}>
+                    {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                 </p>
-
             </div>
-
-
-
         </div>
     )
 }

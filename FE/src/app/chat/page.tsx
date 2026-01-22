@@ -133,7 +133,7 @@ export default function Chat() {
     }, [])
 
     return (
-        <div className="flex flex-col h-screen bg-slate-900">
+        <div className="flex flex-col h-screen bg-black">
             <ChatHeader isConnected={isConencted} />
             <div className="flex-1 overflow-y-auto p-4 pb-24">
                 <div className="max-w-2xl mx-auto space-y-3 sm:space-y-4">
